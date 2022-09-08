@@ -33,7 +33,9 @@ export class NgxDatePickerDirective {
         })
       }
 
-      this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
+      if(!this.dpHandler.datePickerIsOpened){
+        this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
+      }
     }
   }
 
