@@ -1,0 +1,55 @@
+<div class="ngx_date_picker">
+    <!-- date picker Header (year and month buttons + navigations) -->
+    <ng-container [ngTemplateOutlet]="datePicker_header"></ng-container>
+
+    <!-- date picker body (select views) -->
+    <ng-container [ngTemplateOutlet]="datePicker_body"></ng-container>
+
+    <!-- date picker footer (date picker actions) -->
+    <ng-container [ngTemplateOutlet]="datePicker_footer"></ng-container>
+</div>
+
+<ng-template #datePicker_header>
+    <div class="date_picker_header">
+        <button class="nav_btn back_btn" title="back"
+        [ngClass]="{'rotate_it': calendarType == 'jalali'}"
+        (click)="navigate('back')">
+            <span class="nav_icon back_icon"></span>
+        </button>
+
+        <div class="view_mode_select">
+            <ng-container *ngIf="selectMode != 'years'">
+                <button *ngIf="selectMode == 'days'"
+                class="month_select" (click)="selectMode = 'months' ">
+                    <span>
+                        <!-- {{months[selectedDate.month!]}} -->
+                    </span>
+                </button>
+                <button
+                class="year_select" (click)="selectMode = 'years' ">
+                    <span>
+                        <!-- {{selectedDate.year}} -->
+                    </span>
+                </button>
+            </ng-container>
+            <span *ngIf="selectMode == 'years'">
+                <!-- {{
+                    (currentDate.year - (10 + yearsStep*20))
+                    + " - " +
+                    ((currentDate.year - (10 + yearsStep*20)) + 19)
+                }} -->
+            </span>
+        </div>
+
+        <button class="nav_btn next_btn" title="next"
+        [ngClass]="{'rotate_it': calendarType == 'jalali'}"
+        (click)="navigate('next')">
+            <span class="nav_icon next_icon"></span>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #datePicker_body></ng-template>
+
+<ng-template #datePicker_footer></ng-template>
+

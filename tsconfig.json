@@ -2,6 +2,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@ah99/ngx-date-picker": [
+        "dist/ah99/ngx-date-picker/ah99-ngx-date-picker",
+        "dist/ah99/ngx-date-picker"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
