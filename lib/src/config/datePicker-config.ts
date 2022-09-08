@@ -12,7 +12,7 @@ export type WeekdayAndMonthTitle = {
     [type in CalendarType]: string[]
 }
 
-export const days: WeekdayAndMonthTitle = {
+export const weekDays: WeekdayAndMonthTitle = {
     gregorian: weekDaysArray,
     jalali: jweekDaysArray
 }
@@ -29,7 +29,9 @@ export interface IDayView {
     month: number,
     weekDay: number,
     day: number,
-    disabled: boolean
+    disabled: boolean,
+    isToday: boolean,
+    isSelected: boolean
 }
 
 export type DaysViewInMonth = IDayView[]
@@ -40,6 +42,14 @@ export interface IDate {
     year: number,
     month: number,
     day: number,
+}
+
+export interface ISelectedDate {
+    date: Date,
+    type: CalendarType,
+    year: number,
+    month: number | null,
+    day: number | null,
 }
 
 // DatePicker configs
