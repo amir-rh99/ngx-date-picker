@@ -9,6 +9,20 @@
     <ng-container [ngTemplateOutlet]="datePicker_footer"></ng-container>
 </div>
 
+<ng-template #datePicker_body>
+    <div class="date_picker_body">
+         <!-- days view -->
+         <ng-container *ngIf="selectMode == 'days'" [ngTemplateOutlet]="daysView"></ng-container>
+
+         <!-- months view -->
+         <ng-container *ngIf="selectMode == 'months'" [ngTemplateOutlet]="monthsView"></ng-container>
+         
+         <!-- years view -->
+         <ng-container *ngIf="selectMode == 'years'" [ngTemplateOutlet]="yearsView"></ng-container>
+         
+    </div>
+</ng-template>
+
 <ng-template #datePicker_header>
     <div class="date_picker_header">
         <button class="nav_btn back_btn" title="back"
@@ -22,22 +36,22 @@
                 <button *ngIf="selectMode == 'days'"
                 class="month_select" (click)="selectMode = 'months' ">
                     <span>
-                        <!-- {{months[selectedDate.month!]}} -->
+                        {{months[selectedDate.month!]}}
                     </span>
                 </button>
                 <button
                 class="year_select" (click)="selectMode = 'years' ">
                     <span>
-                        <!-- {{selectedDate.year}} -->
+                        {{selectedDate.year}}
                     </span>
                 </button>
             </ng-container>
             <span *ngIf="selectMode == 'years'">
-                <!-- {{
+                {{
                     (currentDate.year - (10 + yearsStep*20))
                     + " - " +
                     ((currentDate.year - (10 + yearsStep*20)) + 19)
-                }} -->
+                }}
             </span>
         </div>
 
@@ -49,7 +63,103 @@
     </div>
 </ng-template>
 
-<ng-template #datePicker_body></ng-template>
+<ng-template #datePicker_footer>
+    <div class="date_picker_footer">
+        <button class="footer_btn cancel_btn" (click)="closeDatePicker()">
+            Cancel
+        </button>
+        <button class="footer_btn done_btn" (click)="saveIt()">
+            Done
+        </button>
+    </div>
+</ng-template>
 
-<ng-template #datePicker_footer></ng-template>
+<ng-template #daysView>
+    <div  class="calendar_table days_view">
+        <div class="calendar_table_header calendar_table_row">
+            <span *ngFor="let day of weekDays">
+                {{day}}
+            </span>
+        </div>
 
+        <div class="calendar_table_body">
+            <div *ngFor="let week of selectedMonthDays; let i = index"
+            class="calendar_table_row">
+                <span *ngFor="let day of week; let j = index"
+                class="calendar_cell"
+                [ngClass]="{
+                    'disabled': day.disabled,
+                    'today': day.isToday,
+                    'selected': day.isSelected
+                }">
+                    <button class="calendar_day_btn"
+                    (click)=" day.disabled ? null : setValueForSelectView('days', day.day) ">
+                        <span>
+                            {{day.day}}
+                        </span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #monthsView>
+    <div class="calendar_table months_view">
+        <div class="calendar_table_body">
+            <div *ngFor="let row of [].constructor(4); let i = index"
+            class="calendar_table_row">
+                <ng-container *ngFor="let col of [].constructor(3); let j = index" 
+                [ngTemplateOutlet]="monthCell" 
+                [ngTemplateOutletContext]="{month: (((i*4) - i) + j)}"></ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #yearsView>
+    <div class="calendar_table years_view">
+        <div>
+            <div class="calendar_table_body">
+                <div class="calendar_table_row"
+                *ngFor="let row of [].constructor(5); let i = index">
+                    <ng-container *ngFor="let col of [].constructor(4); let j = index" 
+                    [ngTemplateOutlet]="yearCell" 
+                    [ngTemplateOutletContext]="{year: selectedDate.year + ((i*20/4) - i) + j - (10 + (20*yearsStep))}"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #monthCell let-month="month">
+    <span class="calendar_cell"
+    [ngClass]="{
+        'today':currentDate.year == selectedDate.year &&  month == currentDate.month,
+        'selected': month == selectedDate.month
+    }"
+    [ngStyle]="{'width': 'calc(' + 100 / 3 + '%)'}">
+        <button class="calendar_day_btn"
+        (click)="setValueForSelectView('months', month )">
+            <span>
+                {{ months[month] }}
+            </span>
+        </button>
+    </span>
+</ng-template>
+
+<ng-template #yearCell let-year="year">
+    <span class="calendar_cell"
+    [ngClass]="{
+        'today': year == currentDate.year,
+        'selected': year == selectedDate.year
+         }"
+     >
+        <button class="calendar_day_btn"
+        (click)="setValueForSelectView('years', year)">
+            <span>
+                {{ year }}
+            </span>
+        </button>
+    </span>
+</ng-template>
