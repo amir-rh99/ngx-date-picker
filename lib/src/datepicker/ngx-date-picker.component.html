@@ -1,4 +1,5 @@
-<div class="ngx_date_picker">
+<div class="ngx_date_picker"
+[dir]=" calendarType == 'jalali' ? 'rtl' : 'ltr' ">
     <!-- date picker Header (year and month buttons + navigations) -->
     <ng-container [ngTemplateOutlet]="datePicker_header"></ng-container>
 
