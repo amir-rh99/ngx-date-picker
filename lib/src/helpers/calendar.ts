@@ -22,10 +22,22 @@ export default class Calendar {
     private getDaysInSelectedMonth(month: number, year: number): DaysViewInMonth {
 
         let days: IDayView[] = [];
-        
-        const monthLength = this.calendarType == "jalali" ? jalaaliMonthLength(year, month) : new Date(year, month, 0).getDate()
+        let monthLength: number;
+
+        if(this.calendarType == "jalali") {
+            month += 1
+            monthLength = jalaaliMonthLength(year, month)
+            // month -= 1;
+        } else {
+            monthLength = new Date(year, month+1, 0).getDate()
+        }
+
+        // const monthLength = this.calendarType == "jalali" ? 
+        // jalaaliMonthLength(year, month) : 
+        // new Date(year, month+1, 0).getDate()
+
         let dayCounter = 1
-        
+
         const now = new Date()
         let [y,m,d] = [now.getFullYear(), now.getMonth(), now.getDate()]
         const today = new Date(y, m, d)
@@ -35,10 +47,12 @@ export default class Calendar {
         while (dayCounter <= monthLength) {
 
             let [gYear, gMonth, gDay] = [year, month, dayCounter]
+            let monthIndex: number = month;
 
             if(this.calendarType == "jalali"){
                 const {gy, gm, gd} = toGregorian(year, month, dayCounter);
                 [gYear, gMonth, gDay] = [gy, gm - 1, gd]
+                monthIndex -= 1
             }
 
             const currentDate = new Date(gYear, gMonth, gDay)            
@@ -47,7 +61,7 @@ export default class Calendar {
 
             days.push({
                 date: currentDate, type: this.calendarType,
-                year, month, day: dayCounter, disabled: false,
+                year, month: monthIndex, day: dayCounter, disabled: false,
                 weekDay: currentDayWeek, isToday, isSelected: false
             })
 
