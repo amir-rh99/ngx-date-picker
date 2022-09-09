@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngx-date-picker';
+
+  select(e: any){
+    console.log(e)
+  }
 }

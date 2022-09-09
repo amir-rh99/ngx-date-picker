@@ -1,3 +1,10 @@
-<div>
-  <input type="text" ngx-date-picker>
+<div style="margin: 50px; display: flex;">
+  <div style="margin: 100px;">
+    <input type="text" ngx-date-picker datePickerFormat="DD/MM/YYYY" 
+    (onDateSelect)="select($event)">
+  </div>
+  <div style="margin: 100px;">
+    <input type="text" ngx-date-picker datePickerType="jalali" datePickerFormat="DD-MM-YYYY" 
+    (onDateSelect)="select($event)">
+  </div>
 </div>
