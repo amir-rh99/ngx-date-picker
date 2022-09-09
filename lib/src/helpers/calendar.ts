@@ -22,26 +22,47 @@ export default class Calendar {
     private getDaysInSelectedMonth(month: number, year: number): DaysViewInMonth {
 
         let days: IDayView[] = [];
+        let monthLength: number;
 
-        const monthLength = this.calendarType == "jalali" ? jalaaliMonthLength(year, month) : new Date(year, month, 0).getDate()
+        if(this.calendarType == "jalali") {
+            month += 1
+            monthLength = jalaaliMonthLength(year, month)
+            // month -= 1;
+        } else {
+            monthLength = new Date(year, month+1, 0).getDate()
+        }
+
+        // const monthLength = this.calendarType == "jalali" ? 
+        // jalaaliMonthLength(year, month) : 
+        // new Date(year, month+1, 0).getDate()
+
         let dayCounter = 1
-        
+
+        const now = new Date()
+        let [y,m,d] = [now.getFullYear(), now.getMonth(), now.getDate()]
+        const today = new Date(y, m, d)
+
+        let isToday: boolean = false;
+
         while (dayCounter <= monthLength) {
 
             let [gYear, gMonth, gDay] = [year, month, dayCounter]
+            let monthIndex: number = month;
 
             if(this.calendarType == "jalali"){
                 const {gy, gm, gd} = toGregorian(year, month, dayCounter);
                 [gYear, gMonth, gDay] = [gy, gm - 1, gd]
+                monthIndex -= 1
             }
 
-            const currentDate = new Date(gYear, gMonth, gDay)
+            const currentDate = new Date(gYear, gMonth, gDay)            
+            isToday = currentDate.getTime() == today.getTime()
             let currentDayWeek = this.getDayIndexOfWeek(currentDate.getDay())
 
             days.push({
                 date: currentDate, type: this.calendarType,
-                year, month, day: dayCounter, disabled: false,
-                weekDay: currentDayWeek
+                year, month: monthIndex, day: dayCounter, disabled: false,
+                weekDay: currentDayWeek, isToday, isSelected: false
             })
 
             dayCounter++
@@ -58,8 +79,7 @@ export default class Calendar {
         lastDayInMonth.date = new Date(lastDayInMonth.date)
         
         for (let index = 0; index < firstDayInMonth.weekDay; index++) {
-            firstDayInMonth.date.setDate(firstDayInMonth.date.setDate() - 1);
-            console.log(firstDayInMonth.date);
+            firstDayInMonth.date.setDate(firstDayInMonth.date.getDate() - 1);
             
             const currentDate = new Date(firstDayInMonth.date)
             const dateInfo = new DateInfo(this.calendarType)
@@ -69,12 +89,12 @@ export default class Calendar {
                 date: currentDate, type: this.calendarType,
                 year, month, day,
                 weekDay: firstDayInMonth.weekDay - (index+1),
-                disabled: true,
+                disabled: true, isToday: false, isSelected: false
             });
         }
       
         for (let index = 0; index < (6 - lastDayInMonth.weekDay); index++) {
-            lastDayInMonth.date.setUTCDate(lastDayInMonth.date.getUTCDate() + 1);
+            lastDayInMonth.date.setDate(lastDayInMonth.date.getDate() + 1);
         
             const currentDate = new Date(lastDayInMonth.date)
             const dateInfo = new DateInfo(this.calendarType)
@@ -84,7 +104,7 @@ export default class Calendar {
                 date: currentDate, type: this.calendarType,
                 year, month, day,
                 weekDay: lastDayInMonth.weekDay + index + 1,
-                disabled: true,
+                disabled: true,  isToday: false, isSelected: false
             });
         }
 
@@ -93,13 +113,22 @@ export default class Calendar {
 
     private getDayIndexOfWeek(index: number): number{
         if(this.calendarType == "jalali"){
-            if(index == 5){
+            if(index == 6){
                 index = 0
-            } else if(index == 6){
-                index = 1
-            } else {
-                index += 2
+            } 
+            // else if(index == 6){
+            //     index = 1
+            // } 
+            else {
+                index += 1
             }
+            // if(index == 5){
+            //     index = 0
+            // } else if(index == 6){
+            //     index = 1
+            // } else {
+            //     index += 2
+            // }
         }
         return index
     }
