@@ -11,7 +11,8 @@ import { NgxDatePickerModule } from "../../lib/src/public-api"
   imports: [
     BrowserModule,
     NgxDatePickerModule.forRoot({
-      calendar: "jalali"
+      calendar: "gregorian",
+      format: "DD-MM-YYYY"
     })
   ],
   providers: [],

@@ -20,7 +20,7 @@ import { DATEPICKER_CONFIG, GlobalConfig, DefaultGlobalConfig } from '../config/
 
 export class NgxDatePickerModule {
   static forRoot(config: Partial<GlobalConfig> = {}): ModuleWithProviders<NgxDatePickerModule> {
-
+    
     const value = {
       ...DefaultGlobalConfig,
       ...config
