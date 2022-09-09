@@ -1,6 +1,7 @@
-import { ComponentRef, Directive, ElementRef, HostListener, Inject, Input, ViewContainerRef } from '@angular/core';
-import { CalendarType, DATEPICKER_CONFIG, GlobalConfig } from '../config/datePicker-config';
+import { ComponentRef, Directive, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewContainerRef } from '@angular/core';
+import { CalendarType, DATEPICKER_CONFIG, DefaultGlobalConfig, GlobalConfig, IDate, ValueFormat } from '../config/datePicker-config';
 import { DatePickerHandler } from "../handlers";
+import DateTransform from '../helpers/dateTransform';
 
 @Directive({
   selector: '[ngx-date-picker]',
@@ -12,10 +13,12 @@ import { DatePickerHandler } from "../handlers";
 export class NgxDatePickerDirective {
 
   private inputElement!: HTMLInputElement;
-  private datePickerComponentElement!: ComponentRef<any>;
+  private datePickerComponentElement!: ComponentRef<any> | null;
 
-  @Input("calendarType") calendar!: CalendarType;
-    
+  @Input("datePickerType") calendar!: CalendarType;
+  @Input("datePickerFormat") outPutFormat!: ValueFormat;
+  @Output("onDateSelect") onSelect = new EventEmitter<Partial<IDate>>()
+
   constructor(
     @Inject(DATEPICKER_CONFIG) token: GlobalConfig,
     private _viewContainerRef: ViewContainerRef,
@@ -28,12 +31,24 @@ export class NgxDatePickerDirective {
 
       const config: GlobalConfig = {
         ...token,
-        ...(this.calendar && {
-          calendar: this.calendar
+        calendar: this.calendar || DefaultGlobalConfig.calendar,
+        format: this.outPutFormat || DefaultGlobalConfig.format
+      }
+      
+      if(!this.dpHandler.datePickerIsOpened){
+        this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
+        this.datePickerComponentElement.instance.onDateSelect.subscribe((date: Date) => {
+
+          const dateTransform = new DateTransform(date, config.calendar)
+          const inputValue = dateTransform.transformDate(config.format)
+          this.inputElement.value = inputValue
+
+          const outputData = dateTransform.getOutputData(config.outputData)
+          this.onSelect.next(outputData)
+
+          this.closeDatePicker()
         })
       }
-
-      this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
     }
   }
 
@@ -46,6 +61,7 @@ export class NgxDatePickerDirective {
   }
 
   closeDatePicker(){
+    this.datePickerComponentElement = null;
     this.dpHandler.closeAndRemoveDatePicker()
   }
 }
