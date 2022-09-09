@@ -12,7 +12,7 @@ import { DatePickerHandler } from "../handlers";
 export class NgxDatePickerDirective {
 
   private inputElement!: HTMLInputElement;
-  private datePickerComponentElement!: ComponentRef<any>;
+  private datePickerComponentElement!: ComponentRef<any> | null;
 
   @Input("calendarType") calendar!: CalendarType;
     
@@ -48,6 +48,7 @@ export class NgxDatePickerDirective {
   }
 
   closeDatePicker(){
+    this.datePickerComponentElement = null;
     this.dpHandler.closeAndRemoveDatePicker()
   }
 }

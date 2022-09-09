@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { CalendarType, GlobalConfig, SelectModes, 
-         weekDays, months, IDate, DaysViewInMonth, ISelectedDate } from '../config/datePicker-config';
+         weekDays, months, IDate, DaysViewInMonth, ISelectedDate, IDayView } from '../config/datePicker-config';
 import Calendar from '../helpers/calendar';
 import DateInfo from '../helpers/dateInfo';
 
@@ -26,6 +26,11 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
   selectedMonthDays!: DaysViewInMonth[];
   currentDate!: IDate;
   selectedDate!: ISelectedDate;
+  viewDate!: {
+    year: number,
+    month: number | null
+  }
+
   yearsStep: number = 0;
 
   constructor(
@@ -39,11 +44,15 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
     this.calandarConfig.setCalendar(this.calendarType);
     this.currentDate = this.getCurrentDate();    
-    this.selectedDate = {...this.currentDate}
+    this.selectedDate = {...this.currentDate, day: null}
+    this.viewDate = {
+      year: this.selectedDate.year,
+      month: this.selectedDate.month
+    }
 
     const { month, year } = this.currentDate;
     const selectedMonthDays = this.calandarConfig.getChunkedDaysInSelectedMonth(month!, year);
-    this.selectedMonthDays = selectedMonthDays;    
+    this.selectedMonthDays = selectedMonthDays;     
   }
 
   getCurrentDate(): IDate{
@@ -64,34 +73,30 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
       case "days":        
         if(action == "next"){
-            if(this.selectedDate.month == this.months.length-1){
-              this.selectedDate.year += 1
-              this.selectedDate.month = 0
+            if(this.viewDate.month == this.months.length-1){
+              this.viewDate.year += 1
+              this.viewDate.month = 0
             } else {
-              this.selectedDate.month! += 1
+              this.viewDate.month! += 1
             }
-
-            this.selectedDate.day = null
           } else if (action == "back"){
-            if(this.selectedDate.month == 0){
-              this.selectedDate.year -= 1
-              this.selectedDate.month = 11
+            if(this.viewDate.month == 0){
+              this.viewDate.year -= 1
+              this.viewDate.month = 11
             } else {
-              this.selectedDate.month! -= 1
+              this.viewDate.month! -= 1
             }
-
-            this.selectedDate.day = null
         }
 
         this.selectedMonthDays = 
-        this.calandarConfig.getChunkedDaysInSelectedMonth(this.selectedDate.month!, this.selectedDate.year)
+        this.calandarConfig.getChunkedDaysInSelectedMonth(this.viewDate.month!, this.viewDate.year)
         break;
 
       case "months":        
         if(action == "next"){
-            this.selectedDate.year += 1
+            this.viewDate.year += 1
         } else if (action == "back"){
-          this.selectedDate.year -= 1
+          this.viewDate.year -= 1
         }
         break;
     
@@ -100,30 +105,42 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
     }
   }
 
-  setValueForSelectView(viewMode: SelectModes, value: number){
+  setValueForSelectView(viewMode: SelectModes, value: number, dayInfo?: IDayView){
     switch (viewMode) {
       case "years":
         {
-          this.selectedDate.year = value          
-          this.selectedDate.month = null
+          if(value !== this.selectedDate.year){
+            this.selectedDate.year = value
+            this.selectedDate.month = null
+          }
+
+          this.viewDate.year = value             
           this.selectMode = "months"
         }
         break;
 
       case "months":
         {
-          this.selectedDate.month = value
+          if(value !== this.selectedDate.month){
+            this.selectedDate.month = value
+            this.selectedDate.day = null;
+          }
+
+          this.viewDate.month = value
           this.selectMode = "days"
-          this.selectedDate.day = null;
 
           this.selectedMonthDays = 
-          this.calandarConfig.getChunkedDaysInSelectedMonth(this.selectedDate.month, this.selectedDate.year)
+          this.calandarConfig.getChunkedDaysInSelectedMonth(this.viewDate.month!, this.viewDate.year)
         }
         break;
 
       case "days":
         {
-          this.selectedDate.day = value          
+          const { date, day, month, year } = dayInfo!
+          this.selectedDate = {
+            ...this.selectedDate,
+            date, day, month, year
+          }
         }
         break;
     
@@ -136,8 +153,7 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
   }
 
-  saveIt(){
-
+  done(){
   }
 
   ngOnDestroy(): void {

@@ -13,6 +13,8 @@ import { DatePickerOverlay } from "./date-picker-overlay";
 
 export class DatePickerHandler {
     
+    datePickerIsOpened: boolean = false;
+
     private _componentInstance!: ComponentRef<any>;
     private _viewContainerRef!: ViewContainerRef;
     private _datePickerOverlay!: HTMLElement;
@@ -42,6 +44,7 @@ export class DatePickerHandler {
         const datePikerOverlay = this.dpOverlay.getOverlayElement();
         const datePickerContainer = this.dpContainer.createDatePickerContainerElement()
 
+        this.datePickerIsOpened = true
         datePikerOverlay.classList.add("opened")
         this._datePickerOverlay = datePikerOverlay
         this._datePickerContainer = datePickerContainer
@@ -66,5 +69,6 @@ export class DatePickerHandler {
         this._componentInstance.destroy()
         this._datePickerOverlay.classList.remove("opened")
         this._datePickerOverlay.innerHTML = ""
+        this.datePickerIsOpened = false
     }
 }
