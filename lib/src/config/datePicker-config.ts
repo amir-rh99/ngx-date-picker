@@ -54,12 +54,30 @@ export interface ISelectedDate {
 
 // DatePicker configs
 
+export type ValueFormat = "MM/DD/YYYY" | "MM-DD-YYYY" | "DD-MM-YYYY" | "DD/MM/YYYY"
+export interface OutputEventConfig {
+    date: boolean,
+    type: boolean,
+    year: boolean,
+    month: boolean,
+    day: boolean
+}
 export interface GlobalConfig {
-    calendar: CalendarType
+    calendar: CalendarType,
+    format: ValueFormat,
+    outputData: Partial<OutputEventConfig>
 }
 
 export const DefaultGlobalConfig: GlobalConfig = {
-    calendar: "gregorian"
+    calendar: "gregorian",
+    format: "DD/MM/YYYY",
+    outputData: {
+        date: true,
+        type: false,
+        year: false,
+        month: false,
+        day: false
+    }
 }
 
 export const DATEPICKER_CONFIG = new InjectionToken<GlobalConfig>("DatePickerToken")
