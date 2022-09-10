@@ -78,7 +78,7 @@ button{
     }
 
     .date_picker_body{
-        margin: 1.5rem 0;
+        margin-top: 1.5rem;
         flex: 1 0 0;
         transition: .2s;
 
@@ -210,6 +210,7 @@ button{
     }
 
     .date_picker_footer{
+        margin-top: 1rem;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.75rem;

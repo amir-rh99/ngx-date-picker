@@ -21,6 +21,8 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
   selectMode: SelectModes = "days";
   calendarType: CalendarType = "gregorian";
+  displayFooter: boolean = true;
+
   months!: string[];
   weekDays!: string[];
 
@@ -40,6 +42,8 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.calendarType = this.config.calendar;
+    this.displayFooter = this.config.displayFooter;
+
     this.months = months[this.calendarType]
     this.weekDays = weekDays[this.calendarType]
 
@@ -142,6 +146,8 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
             ...this.selectedDate,
             date, day, month, year
           }
+
+          if(!this.displayFooter) this.done()
         }
         break;
     

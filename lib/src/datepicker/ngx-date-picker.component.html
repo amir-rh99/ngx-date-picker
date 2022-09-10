@@ -1,4 +1,5 @@
 <div class="ngx_date_picker"
+[ngClass]="{'ngx_date_picker_jalali': calendarType == 'jalali'}"
 [dir]=" calendarType == 'jalali' ? 'rtl' : 'ltr' ">
     <!-- date picker Header (year and month buttons + navigations) -->
     <ng-container [ngTemplateOutlet]="datePicker_header"></ng-container>
@@ -7,7 +8,7 @@
     <ng-container [ngTemplateOutlet]="datePicker_body"></ng-container>
 
     <!-- date picker footer (date picker actions) -->
-    <ng-container [ngTemplateOutlet]="datePicker_footer"></ng-container>
+    <ng-container *ngIf="displayFooter" [ngTemplateOutlet]="datePicker_footer"></ng-container>
 </div>
 
 <ng-template #datePicker_body>
@@ -67,10 +68,10 @@
 <ng-template #datePicker_footer>
     <div class="date_picker_footer">
         <button class="footer_btn cancel_btn" (click)="closeDatePicker()">
-            Cancel
+            {{config.cancelText}}
         </button>
         <button class="footer_btn done_btn" (click)="done()">
-            Done
+            {{config.doneText}}
         </button>
     </div>
 </ng-template>

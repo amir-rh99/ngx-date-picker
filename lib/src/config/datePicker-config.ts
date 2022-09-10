@@ -65,7 +65,10 @@ export interface OutputEventConfig {
 export interface GlobalConfig {
     calendar: CalendarType,
     format: ValueFormat,
-    outputData: Partial<OutputEventConfig>
+    outputData: Partial<OutputEventConfig>,
+    displayFooter: boolean,
+    doneText: string,
+    cancelText: string
 }
 
 export const DefaultGlobalConfig: GlobalConfig = {
@@ -77,7 +80,10 @@ export const DefaultGlobalConfig: GlobalConfig = {
         year: false,
         month: false,
         day: false
-    }
+    },
+    displayFooter: true,
+    doneText: "Done",
+    cancelText: "Cancel"
 }
 
 export const DATEPICKER_CONFIG = new InjectionToken<GlobalConfig>("DatePickerToken")
