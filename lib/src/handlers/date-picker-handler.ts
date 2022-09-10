@@ -42,7 +42,7 @@ export class DatePickerHandler {
         this._componentInstance.instance.config = config
 
         const datePikerOverlay = this.dpOverlay.getOverlayElement();
-        const datePickerContainer = this.dpContainer.createDatePickerContainerElement()
+        const datePickerContainer = this.dpContainer.createDatePickerContainerElement(config.themeConfig)
 
         this.datePickerIsOpened = true
         datePikerOverlay.classList.add("opened")

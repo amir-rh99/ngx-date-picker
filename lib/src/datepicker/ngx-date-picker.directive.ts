@@ -1,5 +1,5 @@
 import { ComponentRef, Directive, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewContainerRef } from '@angular/core';
-import { CalendarType, DATEPICKER_CONFIG, DefaultGlobalConfig, GlobalConfig, IDate, ValueFormat } from '../config/datePicker-config';
+import { CalendarType, DATEPICKER_CONFIG, DefaultGlobalConfig, GlobalConfig, IDate, ThemeConfig, ValueFormat } from '../config/datePicker-config';
 import { DatePickerHandler } from "../handlers";
 import DateTransform from '../helpers/dateTransform';
 
@@ -15,6 +15,8 @@ export class NgxDatePickerDirective {
   private inputElement!: HTMLInputElement;
   private datePickerComponentElement!: ComponentRef<any> | null;
 
+  
+  @Input("datePickerConfig") datePickerConfig: Partial<GlobalConfig> = {};
   @Input("datePickerType") calendar!: CalendarType;
   @Input("datePickerFormat") outPutFormat!: ValueFormat;
   @Output("onDateSelect") onSelect = new EventEmitter<Partial<IDate>>()
@@ -29,11 +31,35 @@ export class NgxDatePickerDirective {
     this.inputElement = this.el.nativeElement;
     this.inputElement.onfocus = () => {   
 
-      const config: GlobalConfig = {
-        ...token,
-        calendar: this.calendar || DefaultGlobalConfig.calendar,
-        format: this.outPutFormat || DefaultGlobalConfig.format
+      console.log({...{rounded: DefaultGlobalConfig.themeConfig.rounded},
+        ...{rounded: this.datePickerConfig.themeConfig?.rounded}});
+      
+      let themeConfig: Partial<ThemeConfig> = {
+        ...{rounded: DefaultGlobalConfig.themeConfig.rounded},
+        ...{rounded: this.datePickerConfig.themeConfig?.rounded},
+        light: {
+          ...DefaultGlobalConfig.themeConfig.light,
+          ...this.datePickerConfig.themeConfig?.light,
+        },
+        dark: {
+          ...DefaultGlobalConfig.themeConfig.dark,
+          ...this.datePickerConfig.themeConfig?.dark
+        },
       }
+          
+      const config = {
+        ...DefaultGlobalConfig,
+        ...this.datePickerConfig,
+        themeConfig
+      }
+
+      console.log(config);
+      
+      // const config: GlobalConfig = {
+      //   ...token,
+      //   calendar: this.calendar || DefaultGlobalConfig.calendar,
+      //   format: this.outPutFormat || DefaultGlobalConfig.format
+      // }
       
       if(!this.dpHandler.datePickerIsOpened){
         this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      

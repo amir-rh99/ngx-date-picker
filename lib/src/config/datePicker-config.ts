@@ -62,13 +62,26 @@ export interface OutputEventConfig {
     month: boolean,
     day: boolean
 }
+
+interface ThemeColors {
+    primaryColor: string,
+    secondaryColor: string,
+    backgroudColor: string
+}
+export interface ThemeConfig {
+    light: Partial<ThemeColors>,
+    dark: Partial<ThemeColors>,
+    rounded: false | "medium" | "full"
+}
+
 export interface GlobalConfig {
     calendar: CalendarType,
     format: ValueFormat,
     outputData: Partial<OutputEventConfig>,
     displayFooter: boolean,
     doneText: string,
-    cancelText: string
+    cancelText: string,
+    themeConfig: Partial<ThemeConfig>
 }
 
 export const DefaultGlobalConfig: GlobalConfig = {
@@ -80,6 +93,19 @@ export const DefaultGlobalConfig: GlobalConfig = {
         year: false,
         month: false,
         day: false
+    },
+    themeConfig: {
+        light: {
+            primaryColor: "#c5a907",
+            secondaryColor: "#444",
+            backgroudColor: "#fff"
+        },
+        dark: {
+            primaryColor: "#c5a907",
+            secondaryColor: "#fff",
+            backgroudColor: "#444"
+        },
+        rounded: "medium"
     },
     displayFooter: true,
     doneText: "Done",

@@ -1,3 +1,9 @@
+// var(--primaryColor): #4e4e4e;
+// $secondary_color: #444;
+
+$datePicker_bg: #fff;
+$radius: 0.75rem;
+
 * {
     box-sizing: border-box;
 }
@@ -13,8 +19,9 @@ button{
     width: 100%;
     height: 100%;
     border-radius: 0.5rem;
-    border: 1px solid #ddd;
-
+    border: 1px solid rgba(var(--secondaryColor), 0.2);
+    background-color: rgba(var(--backgroudColor), 1);
+    
     display: flex;
     flex-direction: column;
     padding: 0.75rem;
@@ -30,17 +37,17 @@ button{
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 999rem;
+            border-radius: var(--borderRounded);
             transition: .1s;
 
             &:hover{
-                background-color: #eee;
+                background-color: rgba(var(--primaryColor), 0.15);
             }
 
             .nav_icon{
                 width: 0.75rem;
                 height: 0.75rem;
-                border: 0 solid #777;
+                border: 0 solid rgba(var(--primaryColor), 0.4);
                 border-top-width: 0.25rem;
 
                 &.next_icon{
@@ -57,21 +64,23 @@ button{
 
         .view_mode_select{
             display: flex;
+            color: rgba(var(--secondaryColor), 1);
             
             button{
+                color: rgba(var(--secondaryColor), 1);
                 font-size: 1rem;
-                width: 4rem;
-                padding: 0.4rem 0.75rem;
-                border-radius: 0.75rem;
+                min-width: 4rem;
+                height: 2rem;
+                padding: 0 0.4rem;
+                border-radius: var(--borderRounded);
+
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin: 0 0.4rem;
 
                 &:hover {
-                    background-color: #dbdbdb;
-                    border: 2px solid #fff;
-                    outline: 1px solid #acacac;
+                    background-color: rgba(var(--primaryColor), 0.15);
                 }
             }
         }
@@ -89,7 +98,6 @@ button{
 
             .calendar_table_body{
                 margin-top: 0.75rem;
-                color: #777;
 
                 .calendar_cell{
                     padding-top: calc(100%/14);
@@ -99,7 +107,7 @@ button{
                     line-height: 0;
     
                     &.disabled {
-                        opacity: 0.25;
+                        opacity: 0.3;
                         font-weight: 400;
     
                         button, span{
@@ -113,22 +121,21 @@ button{
     
                     &.today{
                         span {
-                            background-color: #fff;
-                            outline: 1px solid #999;
-                            color: #444;
+                            background-color: rgba(var(--backgroudColor), 1);
+                            outline: 1px solid rgba(var(--primaryColor), 1);
+                            font-weight: 600;
                         }
                     }
-    
+                    
                     &.selected{
                         span {
-                            background-color: #777;
+                            background-color: rgba(var(--primaryColor), 1);
                             color: #fff;
-    
-                            // outline: 1px solid #999;
-                            border: 2px solid #fff;
+                            font-weight: 400;
+                            border: 2px solid rgba(var(--backgroudColor), 1);
     
                             &:hover{
-                                background-color: #777 !important;
+                                background-color: rgba(var(--primaryColor), 1) !important;
                             }
                         }
                     }
@@ -145,7 +152,8 @@ button{
                         text-align: center;
                         outline: none;
                         margin: 0;
-    
+                        color: rgba(var(--secondaryColor), 1);
+
                         span{
                             position: absolute;
                             top: 5%;
@@ -157,12 +165,11 @@ button{
                             width: 90%;
                             height: 90%;
                             line-height: 1;
-                            border-radius: 0.7rem;
+                            border-radius: var(--borderRounded);
                             font-size: 0.8rem;
-                            font-weight: 600;
     
                             &:hover{
-                                background-color: #dbdbdb;
+                                background-color: rgba(var(--primaryColor), 0.25);
                             }
                         }
                     }
@@ -178,7 +185,7 @@ button{
                 }
 
                 .calendar_table_header{
-                    color: #777;
+                    color: rgba(var(--secondaryColor), 0.75);
     
                     span {
                         font-size: 0.8rem;
@@ -216,7 +223,7 @@ button{
         gap: 0.75rem;
 
         .footer_btn{
-            border-radius: 8px;
+            border-radius: calc(var(--borderRounded) - 0.25rem);
             border: 0 solid;
             width: 100%;
             height: 2.25rem;
@@ -224,21 +231,21 @@ button{
             border-width: 1px;
 
             &.cancel_btn{
-                border-color: #999;
-                color: #777;
+                color: rgba(var(--primaryColor), 1);
+                border-color: rgba(var(--primaryColor), 1);
 
                 &:hover{
-                    background-color: #eee;
+                    background-color: rgba(var(--primaryColor), 0.1);
                 }
             }
 
             &.done_btn{
-                border-color: #777;
+                border-color: rgba(var(--primaryColor), 1);
+                background-color: rgba(var(--primaryColor), 0.9);
                 color: #fff;
-                background-color: #777;
 
                 &:hover{
-                    background-color: #444;
+                    background-color: rgba(var(--primaryColor),1);
                 }
             }
         }
