@@ -12,7 +12,16 @@ import { NgxDatePickerModule } from "../../lib/src/public-api"
     BrowserModule,
     NgxDatePickerModule.forRoot({
       calendar: "gregorian",
-      format: "DD-MM-YYYY"
+      format: "DD-MM-YYYY",
+      doneText: "اوکی",
+      cancelText: "لغو",
+      displayFooter: true,
+      themeConfig: {
+        light: {
+          primaryColor: "#04AA6D",
+          secondaryColor: "#444"
+        }
+      }
     })
   ],
   providers: [],
