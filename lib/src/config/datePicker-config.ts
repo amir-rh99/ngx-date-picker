@@ -1,5 +1,9 @@
 import { InjectionToken } from "@angular/core"
 
+export type DeepPartial<T> = T extends object ? {
+    [P in keyof T]?: DeepPartial<T[P]>;
+} : T;
+
 export type CalendarType = "jalali" | "gregorian"
 export type SelectModes = "years" | "months" | "days"
 
@@ -69,20 +73,22 @@ interface ThemeColors {
     backgroudColor: string
 }
 export interface ThemeConfig {
-    light: Partial<ThemeColors>,
-    dark: Partial<ThemeColors>,
+    light: ThemeColors,
+    dark: ThemeColors,
     rounded: false | "medium" | "full"
 }
 
 export interface GlobalConfig {
     calendar: CalendarType,
     format: ValueFormat,
-    outputData: Partial<OutputEventConfig>,
+    outputData: OutputEventConfig,
     displayFooter: boolean,
     doneText: string,
     cancelText: string,
-    themeConfig: Partial<ThemeConfig>
+    themeConfig: ThemeConfig
 }
+
+export type CustomConfig = DeepPartial<GlobalConfig>
 
 export const DefaultGlobalConfig: GlobalConfig = {
     calendar: "gregorian",
@@ -96,7 +102,7 @@ export const DefaultGlobalConfig: GlobalConfig = {
     },
     themeConfig: {
         light: {
-            primaryColor: "#c5a907",
+            primaryColor: "#777",
             secondaryColor: "#444",
             backgroudColor: "#fff"
         },
