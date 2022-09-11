@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CalendarType, GlobalConfig, SelectModes, 
-         weekDays, months, IDate, DaysViewInMonth, ISelectedDate, IDayView } from '../config/datePicker-config';
+         weekDays, months, IDate, DaysViewInMonth, ISelectedDate, IDayView, DatepickerEvents } from '../config/datePicker-config';
 import Calendar from '../helpers/calendar';
 import DateInfo from '../helpers/dateInfo';
 
@@ -18,6 +18,7 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
   @Input("config") config!: GlobalConfig;
   @Output("onDateSelect") onDateSelect = new EventEmitter<Date>()
+  @Output("onEvents") onEvents = new EventEmitter<DatepickerEvents>()
 
   selectMode: SelectModes = "days";
   calendarType: CalendarType = "gregorian";
@@ -157,6 +158,7 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
   }
 
   closeDatePicker(){
+    this.onEvents.emit("closeDatepicker")
   }
 
   done(){
@@ -164,7 +166,7 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
       console.warn("date not selected")
     } else {
       const { date } = this.selectedDate
-      this.onDateSelect.next(date)
+      this.onDateSelect.emit(date)
     }
   }
 

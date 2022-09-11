@@ -56,6 +56,8 @@ export interface ISelectedDate {
     day: number | null,
 }
 
+export type DatepickerEvents = "closeDatepicker"
+
 // DatePicker configs
 
 export type ValueFormat = "MM/DD/YYYY" | "MM-DD-YYYY" | "DD-MM-YYYY" | "DD/MM/YYYY"

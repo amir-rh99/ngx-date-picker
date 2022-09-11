@@ -1,5 +1,5 @@
 import { ComponentRef, Directive, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewContainerRef } from '@angular/core';
-import { DATEPICKER_CONFIG, DeepPartial, GlobalConfig, IDate } from '../config/datePicker-config';
+import { DatepickerEvents, DATEPICKER_CONFIG, DeepPartial, GlobalConfig, IDate } from '../config/datePicker-config';
 import { DatePickerHandler } from "../handlers";
 import DateTransform from '../helpers/dateTransform';
 import { DefaultsDeep } from '../helpers/functions';
@@ -45,6 +45,12 @@ export class NgxDatePickerDirective {
           this.onSelect.next(outputData)
 
           this.closeDatePicker()
+        })
+
+        this.datePickerComponentElement.instance.onEvents.subscribe((event: DatepickerEvents) => {
+          if(event == "closeDatepicker"){
+            this.closeDatePicker()
+          }
         })
       }
     }
