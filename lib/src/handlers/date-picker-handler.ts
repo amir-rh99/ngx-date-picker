@@ -39,30 +39,37 @@ export class DatePickerHandler {
     createAndResolveDatePicker(config: GlobalConfig){
         const _componentFactory = this._componentFactoryResolver.resolveComponentFactory(NgxDatePickerComponent)
         this._componentInstance = this._viewContainerRef.createComponent(_componentFactory);
-        this._componentInstance.instance.config = config
 
+        this._componentInstance.instance.config = config
         const datePikerOverlay = this.dpOverlay.getOverlayElement();
         const datePickerContainer = this.dpContainer.createDatePickerContainerElement(config.themeConfig)
 
-        this.datePickerIsOpened = true
-        datePikerOverlay.classList.add("opened")
         this._datePickerOverlay = datePikerOverlay
         this._datePickerContainer = datePickerContainer
-
-        this.setDatePickerContainerPositions()
-
+        
         datePickerContainer.appendChild(this._componentInstance.location.nativeElement)
         datePikerOverlay.appendChild(datePickerContainer)
+        
+        setTimeout(()=>{
+            datePikerOverlay.classList.add("opened")
+            this.datePickerIsOpened = true
+            this.setDatePickerContainerPositions(this._componentInstance.location.nativeElement)
+        }, 1)
 
         return this._componentInstance
     }
 
-    setDatePickerContainerPositions(){
-        const { top, left, height } = this.inputElement.getBoundingClientRect()
+    setDatePickerContainerPositions(datepicker: HTMLElement){
+        const { top, left, height, bottom, right } = this.inputElement.getBoundingClientRect()
+        const { width: dpWidth, height: dpHeight } = datepicker.getBoundingClientRect()
+        const { width: windowWidth, height: windowHeight } = this.getWidnowSizes()
+        
+        let leftPos: number = Math.min(left, left - ((left + dpWidth) - windowWidth))
+        let topPos: number = Math.min(top + height, (top + height) - ((top + height + dpHeight) - windowHeight))
 
         this._datePickerContainer.style.position = "absolute"
-        this._datePickerContainer.style.left = left + "px"
-        this._datePickerContainer.style.top = top + height + 2 + "px"
+        this._datePickerContainer.style.left = leftPos + "px"
+        this._datePickerContainer.style.top = topPos + "px"
     }
 
     closeAndRemoveDatePicker(){
@@ -71,4 +78,31 @@ export class DatePickerHandler {
         this._datePickerOverlay.innerHTML = ""
         this.datePickerIsOpened = false
     }
+
+    private getWidnowSizes(): {width: number, height: number} {
+        const width  = window.innerWidth || document.documentElement.clientWidth || 
+        document.body.clientWidth;
+        const height = window.innerHeight|| document.documentElement.clientHeight|| 
+        document.body.clientHeight;
+
+        return {width, height}
+    }
+
+    // getCoords(elem) { // crossbrowser version
+    //     var box = elem.getBoundingClientRect();
+    
+    //     var body = document.body;
+    //     var docEl = document.documentElement;
+    
+    //     var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    //     var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+    
+    //     var clientTop = docEl.clientTop || body.clientTop || 0;
+    //     var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+    
+    //     var top  = box.top +  scrollTop - clientTop;
+    //     var left = box.left + scrollLeft - clientLeft;
+    
+    //     return { top: Math.round(top), left: Math.round(left) };
+    // }
 }
