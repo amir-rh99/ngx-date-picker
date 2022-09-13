@@ -3,10 +3,15 @@
   "version": "0.1.1",
   "peerDependencies": {
     "@angular/common": ">=12.2.0",
-    "@angular/core": ">=12.2.0"
+    "@angular/core": ">=12.2.0",
+    "jalaali-js": "^1.2.6"
   },
   "dependencies": {
-    "tslib": ">=2.3.0",
-    "jalaali-js": "^1.2.6"
+    "tslib": ">=2.3.0"
+  },
+  "exports": {
+    "./styles": {
+      "default": "./src/styles.css"
+    }
   }
 }

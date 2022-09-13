@@ -1,0 +1,18 @@
+.datepicker_overlay {
+    position: fixed;
+    z-index: 98;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.datepicker_overlay.opened {
+    display: block;
+}
+
+.datepicker_container{
+    position: absolute;
+    z-index: 99;
+}
