@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("../dist/ah99/ngx-date-picker/styles.css");
+
 @font-face {
     font-family: 'iranYekan';
     src: url("./assets/IRANYekanMediumFaNum.ttf");
@@ -16,21 +17,3 @@
 .ngx_date_picker_jalali *{
     font-family: 'iranYekan', 'Vazirmatn', sans-serif;;
 }
-
-.datepicker_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: none;
-    &.opened {
-        display: block;
-    }
-}
-
-// .datepicker-container {
-//     width: 300px;
-//     min-height: 300px;
-//     position: absolute;
-// }
