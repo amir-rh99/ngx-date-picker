@@ -1,4 +1,4 @@
-.bgOverly {
+.datepicker_overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,8 +7,11 @@
     display: none;
 }
 
-.datePicker {
-    width: 300px;
-    min-height: 300px;
+.datepicker_overlay.opened {
+    display: block;
+}
+
+.datepicker_container{
     position: absolute;
+    z-index: 99;
 }
