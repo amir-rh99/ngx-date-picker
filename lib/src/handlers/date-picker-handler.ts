@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver, ComponentRef, 
-         Inject, Injectable, ViewContainerRef } from "@angular/core";
+         Inject, Injectable, Renderer2, ViewContainerRef } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 
 import { GlobalConfig } from "../config/datePicker-config";
@@ -12,7 +12,8 @@ import { DatePickerOverlay } from "./date-picker-overlay";
 })
 
 export class DatePickerHandler {
-    
+
+    private _listeners: any[] = [];
     datePickerIsOpened: boolean = false;
 
     private _componentInstance!: ComponentRef<any>;
@@ -27,6 +28,7 @@ export class DatePickerHandler {
         private dpOverlay: DatePickerOverlay,
         private dpContainer: DatePickerContainer,
         private _componentFactoryResolver: ComponentFactoryResolver,
+        private _renderer: Renderer2
     ){}
 
     init(inputElement: HTMLInputElement, config: GlobalConfig, vcRef: ViewContainerRef): ComponentRef<any>{
@@ -53,19 +55,28 @@ export class DatePickerHandler {
         setTimeout(()=>{
             datePikerOverlay.classList.add("opened")
             this.datePickerIsOpened = true
-            this.setDatePickerContainerPositions(this._componentInstance.location.nativeElement)
+            this.setDatePickerContainerPositions()
+            this._listeners.push(
+                this._renderer.listen("window", "resize", this.setDatePickerContainerPositions.bind(this))
+            )
         }, 1)
 
         return this._componentInstance
     }
 
-    setDatePickerContainerPositions(datepicker: HTMLElement){
+    setDatePickerContainerPositions(){
+        const datepicker = this._componentInstance.location.nativeElement
+        
         const { top, left, height, bottom, right } = this.inputElement.getBoundingClientRect()
         const { width: dpWidth, height: dpHeight } = datepicker.getBoundingClientRect()
         const { width: windowWidth, height: windowHeight } = this.getWidnowSizes()
-        
-        let leftPos: number = Math.min(left, left - ((left + dpWidth) - windowWidth))
-        let topPos: number = Math.min(top + height, (top + height) - ((top + height + dpHeight) - windowHeight))
+
+        let leftStart: number = left
+        let topStart: number = top + height
+        let padding: number = 5
+
+        let leftPos: number = Math.min(leftStart, (windowWidth - dpWidth) - padding)
+        let topPos: number = Math.min(topStart + padding, (windowHeight - dpHeight) - padding)
 
         this._datePickerContainer.style.position = "absolute"
         this._datePickerContainer.style.left = leftPos + "px"
@@ -77,6 +88,7 @@ export class DatePickerHandler {
         this._datePickerOverlay.classList.remove("opened")
         this._datePickerOverlay.innerHTML = ""
         this.datePickerIsOpened = false
+        this._listeners.forEach(fn => fn())
     }
 
     private getWidnowSizes(): {width: number, height: number} {

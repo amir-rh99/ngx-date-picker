@@ -17,9 +17,8 @@ export class DatePickerContainer {
 
         this.setThemeVariables(container, themeConfig)
         container.classList.add("datepicker_container")
-        container.style.position = "absolute"
-        container.style.width = "300px"
-        container.style.minHeight = "300px"
+        container.style.width = "19rem"
+        container.style.minHeight = "19rem"
 
         return container
     }
