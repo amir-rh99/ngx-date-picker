@@ -1,6 +1,6 @@
 {
   "name": "@ah99/ngx-date-picker",
-  "version": "0.1.1",
+  "version": "0.2.2",
   "peerDependencies": {
     "@angular/common": ">=12.2.0",
     "@angular/core": ">=12.2.0",
@@ -11,7 +11,16 @@
   },
   "exports": {
     "./styles": {
-      "default": "./src/styles.css"
+      "default": "./styles.css"
+    },
+    ".": {
+      "types": "./ah99-ngx-date-picker.d.ts",
+      "fesm2015": "./fesm2015/ah99-ngx-date-picker.js",
+      "main": "./bundles/ah99-ngx-date-picker.umd.js",
+      "module": "./fesm2015/ah99-ngx-date-picker.js",
+      "es2015": "./fesm2015/ah99-ngx-date-picker.js",
+      "esm2015": "./esm2015/ah99-ngx-date-picker.js",
+      "default": "./fesm2015/ah99-ngx-date-picker.js"
     }
   }
 }
