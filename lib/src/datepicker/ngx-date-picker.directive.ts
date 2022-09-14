@@ -3,6 +3,7 @@ import { DatepickerEvents, DATEPICKER_CONFIG, DeepPartial, GlobalConfig, IDate }
 import { DatePickerHandler } from "../handlers";
 import DateTransform from '../helpers/dateTransform';
 import { DefaultsDeep } from '../helpers/functions';
+import { NgxDatePickerService } from './ngx-date-picker.service';
 
 @Directive({
   selector: '[ngx-date-picker]',
@@ -35,7 +36,7 @@ export class NgxDatePickerDirective {
         const config: GlobalConfig = DefaultsDeep(this.datePickerConfig, token)
         
         this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
-
+        
         this.datePickerComponentElement.instance.onDateSelect.subscribe((date: Date) => {
           const dateTransform = new DateTransform(date, config.calendar)
           const inputValue = dateTransform.transformDate(config.format)
@@ -53,14 +54,6 @@ export class NgxDatePickerDirective {
           }
         })
       }
-    }
-  }
-
-  @HostListener('document:mousedown', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    if(this.datePickerComponentElement && this.datePickerComponentElement.location.nativeElement){      
-      const isOutSideClick = !this.datePickerComponentElement.location.nativeElement.contains(event.target)
-      if(isOutSideClick) this.closeDatePicker()
     }
   }
 
