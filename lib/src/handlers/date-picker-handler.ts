@@ -6,6 +6,7 @@ import { GlobalConfig } from "../config/datePicker-config";
 import { NgxDatePickerComponent } from "../datepicker";
 import { DatePickerContainer } from "./date-picker-container";
 import { DatePickerOverlay } from "./date-picker-overlay";
+import { NgxDatePickerService } from '../datepicker/ngx-date-picker.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,10 +29,15 @@ export class DatePickerHandler {
         private dpOverlay: DatePickerOverlay,
         private dpContainer: DatePickerContainer,
         private _componentFactoryResolver: ComponentFactoryResolver,
-        private _renderer: Renderer2
+        private _renderer: Renderer2,
+        private datepickerService: NgxDatePickerService
     ){}
 
     init(inputElement: HTMLInputElement, config: GlobalConfig, vcRef: ViewContainerRef): ComponentRef<any>{
+        if(this.datepickerService.haveOpenedDatePicker()){
+            this.datepickerService.closeOpenedDatePicker()
+        }
+
         this._viewContainerRef = vcRef
         this.inputElement = inputElement
 
@@ -41,6 +47,8 @@ export class DatePickerHandler {
     createAndResolveDatePicker(config: GlobalConfig){
         const _componentFactory = this._componentFactoryResolver.resolveComponentFactory(NgxDatePickerComponent)
         this._componentInstance = this._viewContainerRef.createComponent(_componentFactory);
+        this._componentInstance.instance.close = this.closeAndRemoveDatePicker.bind(this)
+        this.datepickerService.datePickerComponent = this._componentInstance
 
         this._componentInstance.instance.config = config
         const datePikerOverlay = this.dpOverlay.getOverlayElement();
@@ -57,17 +65,26 @@ export class DatePickerHandler {
             this.datePickerIsOpened = true
             this.setDatePickerContainerPositions()
             this._listeners.push(
-                this._renderer.listen("window", "resize", this.setDatePickerContainerPositions.bind(this))
+                this._renderer.listen("window", "resize", this.setDatePickerContainerPositions.bind(this)),
+                this._renderer.listen("document", "mousedown", this.onDocumentClick.bind(this)),
             )
         }, 1)
 
         return this._componentInstance
     }
+    
+    onDocumentClick(event: MouseEvent): void {
+        if(this._componentInstance && this._componentInstance.location.nativeElement){      
+            const isOutSideClick = !this._componentInstance.location.nativeElement.contains(event.target)
+            if(isOutSideClick) this.closeAndRemoveDatePicker()
+        }
+    }
 
     setDatePickerContainerPositions(){
-        const datepicker = this._componentInstance.location.nativeElement
         
-        const { top, left, height, bottom, right } = this.inputElement.getBoundingClientRect()
+        const datepicker = this._componentInstance.location.nativeElement        
+        const { height, left, top } = this.inputElement.getBoundingClientRect()
+
         const { width: dpWidth, height: dpHeight } = datepicker.getBoundingClientRect()
         const { width: windowWidth, height: windowHeight } = this.getWidnowSizes()
 
@@ -100,7 +117,7 @@ export class DatePickerHandler {
         return {width, height}
     }
 
-    // getCoords(elem) { // crossbrowser version
+    // getCoords(elem: HTMLElement) { // crossbrowser version
     //     var box = elem.getBoundingClientRect();
     
     //     var body = document.body;
@@ -112,6 +129,8 @@ export class DatePickerHandler {
     //     var clientTop = docEl.clientTop || body.clientTop || 0;
     //     var clientLeft = docEl.clientLeft || body.clientLeft || 0;
     
+    //     console.log(scrollTop);
+        
     //     var top  = box.top +  scrollTop - clientTop;
     //     var left = box.left + scrollLeft - clientLeft;
     

@@ -1,9 +1,8 @@
-import { ComponentRef, Directive, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, EventEmitter, Inject, Input, Output, ViewContainerRef } from '@angular/core';
 import { DatepickerEvents, DATEPICKER_CONFIG, DeepPartial, GlobalConfig, IDate } from '../config/datePicker-config';
 import { DatePickerHandler } from "../handlers";
 import DateTransform from '../helpers/dateTransform';
 import { DefaultsDeep } from '../helpers/functions';
-import { NgxDatePickerService } from './ngx-date-picker.service';
 
 @Directive({
   selector: '[ngx-date-picker]',
