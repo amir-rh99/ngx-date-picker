@@ -1,21 +1,9 @@
 import { CalendarType, OutputEventConfig, ValueFormat } from "../config/datePicker-config";
 import DateInfo from "./dateInfo";
 
-const reg = {
-    "YYYY": "year",
-    "DD": "dayWithZero",
-    "MM": "monthWithZero",
-    "D": "day",
-    "M": "month",
-    "m": "monthName"
-}
-
 export default class DateTransform {
 
     constructor(private date: Date, private calendarType: CalendarType){}
-
-    // replace(year: number, month: number, day: number, format: string){
-    // }
 
     transformDate(format: ValueFormat): string {
 
