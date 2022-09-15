@@ -1,10 +1,23 @@
-<div style="margin: 50px; display: flex;">
-  <div style="margin: 100px;">
-    <input type="text" ngx-date-picker
-    (onDateSelect)="select($event)">
+<div class="container primary_color">
+  <h1 class="mb2">
+    ngx-date-picker Demo
+  </h1>
+
+  <p>
+    ngx-date-picker is a full customizable date picker ( jalali and gregorian ) for Angular +12
+  </p>
+
+  <hr>
+
+  <div class="my3">
+    <app-demo></app-demo>
   </div>
-  <div style="margin: 100px;">
-    <input type="text" ngx-date-picker 
-    (onDateSelect)="select($event)">
+
+  <hr>
+
+  <div class="my3">
+    <app-article></app-article>
   </div>
+  
+  <div class="footer"></div>
 </div>

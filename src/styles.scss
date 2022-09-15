@@ -8,12 +8,17 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-.ngx_date_picker *{
+body, .ngx_date_picker *{
     font-family: 'Roboto', sans-serif;
 }
 
 .ngx_date_picker_jalali *{
     font-family: 'iranYekan', 'Vazirmatn', sans-serif;;
+}
+
+.hljs{
+    border-radius: 0.5rem;
 }

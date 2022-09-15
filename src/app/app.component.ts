@@ -1,16 +1,11 @@
-import { Component } from '@angular/core';
-import { CustomConfig } from 'lib/src/config/datePicker-config';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
+
 export class AppComponent {
-
-  title = 'ngx-date-picker';
-
-  select(e: any){
-    console.log(e)
-  }
 }

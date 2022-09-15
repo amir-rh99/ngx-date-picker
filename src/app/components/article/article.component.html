@@ -1,0 +1,71 @@
+<article>
+  <section>
+    <h3 class="mb2">
+      Installation and Usage
+    </h3>
+
+    <ol>
+      <li class="mb2">
+        <p class="inline_block">
+          Download from npm: 
+        </p>
+
+        <code class="hljs">
+           npm i @ah99/ngx-date-picker
+        </code>
+      </li>
+
+      <li>
+        <p>
+          Import <code class="hljs">NgxDatePickerModule</code> to your module:
+        </p>
+        
+        <pre>
+        <code class="language-js">
+  import {{'{'}} NgxDatePickerModule {{'}'}} from '@ah99/ngx-date-picker'
+
+  .
+  .
+  .
+
+  @NgModule({{'{'}}
+
+    imports: [
+      NgxDatePickerModule.forRoot(),
+      ...
+    ]
+  {{'}'}})
+        </code>
+        </pre>
+      </li>
+
+      <li>
+        <p>
+          Import css styles to your global styles:
+        </p>
+
+        <pre>
+  <code>
+  @import "@ah99/ngx-date-picker/styles"
+  </code>
+        </pre>
+      </li>
+
+      <li>
+        <p>
+          use <code class="hljs">ngx-date-picker</code> directive on any html input element you need:
+        </p>
+
+        <p class="important">
+          you need to setup one form model in your input element like formControl
+        </p>
+
+        <pre>
+  <code class="language-js">
+  {{"<"}}input ngx-date-picker [formControl]="dateControl"{{">"}}
+  </code>
+        </pre>
+      </li>
+    </ol>
+  </section>
+</article>

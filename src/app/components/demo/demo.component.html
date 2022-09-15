@@ -1,0 +1,41 @@
+<div>
+  <h4>
+    This is an input element with default ngx-date-picker config:
+  </h4>
+  
+  <div class="my2">
+    <input ngx-date-picker [formControl]="dateControl">
+  </div>
+
+  <p class="mt3">
+    You can easily replace the default configs with your custom configs.
+  </p>
+
+  <form [formGroup]="configForm" class="mt2">
+    <select formControlName="calendar">
+      <option value="gregorian">gregorian</option>
+      <option value="jalali">jalali</option>
+    </select>
+
+    <input type="text" formControlName="doneText">
+    <input type="text" formControlName="cancelText">
+
+    <div>
+      <label for="displayfooter">display footer</label>
+      <input id="displayfooter" formControlName="displayFooter" type="checkbox">
+    </div>
+
+    <div formGroupName="themeConfig">
+      <div formGroupName="light">
+        <input type="color" formControlName="primaryColor">
+      </div>
+    </div>
+  </form>
+
+  <h4 class="my2">
+    Your input element with your custom configs:
+  </h4>
+  <div class="my2">
+    <input ngx-date-picker [formControl]="customDateControl" [datePickerConfig]="customConfig">
+  </div>
+</div>
