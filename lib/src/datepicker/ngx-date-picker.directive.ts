@@ -20,7 +20,7 @@ export class NgxDatePickerDirective {
   @Output("onDateSelect") onSelect = new EventEmitter<Partial<IDate>>()
 
   constructor(
-    @Inject(DATEPICKER_CONFIG) token: GlobalConfig,
+    @Inject(DATEPICKER_CONFIG) private token: GlobalConfig,
     private _viewContainerRef: ViewContainerRef,
     private el: ElementRef,
     private dpHandler: DatePickerHandler
@@ -28,31 +28,33 @@ export class NgxDatePickerDirective {
     
     this.inputElement = this.el.nativeElement;
     
-    this.inputElement.onfocus = () => {   
+    this.inputElement.onfocus = () => this.createAndOpenDatePicker()
+    this.inputElement.onclick = () => this.createAndOpenDatePicker()
+  }
+
+  createAndOpenDatePicker(){
+    if(!this.dpHandler.datePickerIsOpened){
+
+      const config: GlobalConfig = DefaultsDeep(this.datePickerConfig, this.token)
       
-      if(!this.dpHandler.datePickerIsOpened){
+      this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
+      
+      this.datePickerComponentElement.instance.onDateSelect.subscribe((date: Date) => {
+        const dateTransform = new DateTransform(date, config.calendar)
+        const inputValue = dateTransform.transformDate(config.format)
+        this.inputElement.value = inputValue
 
-        const config: GlobalConfig = DefaultsDeep(this.datePickerConfig, token)
-        
-        this.datePickerComponentElement = this.dpHandler.init(this.inputElement, config, this._viewContainerRef)      
-        
-        this.datePickerComponentElement.instance.onDateSelect.subscribe((date: Date) => {
-          const dateTransform = new DateTransform(date, config.calendar)
-          const inputValue = dateTransform.transformDate(config.format)
-          this.inputElement.value = inputValue
+        const outputData = dateTransform.getOutputData(config.outputData)
+        this.onSelect.next(outputData)
 
-          const outputData = dateTransform.getOutputData(config.outputData)
-          this.onSelect.next(outputData)
+        this.closeDatePicker()
+      })
 
+      this.datePickerComponentElement.instance.onEvents.subscribe((event: DatepickerEvents) => {
+        if(event == "closeDatepicker"){
           this.closeDatePicker()
-        })
-
-        this.datePickerComponentElement.instance.onEvents.subscribe((event: DatepickerEvents) => {
-          if(event == "closeDatepicker"){
-            this.closeDatePicker()
-          }
-        })
-      }
+        }
+      })
     }
   }
 
