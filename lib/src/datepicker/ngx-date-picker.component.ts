@@ -163,7 +163,7 @@ export class NgxDatePickerComponent implements OnInit, OnDestroy {
 
   done(){
     if(!this.selectedDate.day){
-      console.warn("date not selected")
+      this.closeDatePicker()
     } else {
       const { date } = this.selectedDate
       this.onDateSelect.emit(date)

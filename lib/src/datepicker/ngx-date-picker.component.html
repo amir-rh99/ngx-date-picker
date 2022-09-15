@@ -130,7 +130,7 @@
                 *ngFor="let row of [].constructor(5); let i = index">
                     <ng-container *ngFor="let col of [].constructor(4); let j = index" 
                     [ngTemplateOutlet]="yearCell" 
-                    [ngTemplateOutletContext]="{year: viewDate.year + ((i*20/4) - i) + j - (10 + (20*yearsStep))}"></ng-container>
+                    [ngTemplateOutletContext]="{year: currentDate.year + ((i*20/4) - i) + j - (10 + (20*yearsStep))}"></ng-container>
                 </div>
             </div>
         </div>
