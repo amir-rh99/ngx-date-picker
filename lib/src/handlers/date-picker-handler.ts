@@ -52,7 +52,7 @@ export class DatePickerHandler {
 
         this._componentInstance.instance.config = config
         const datePikerOverlay = this.dpOverlay.getOverlayElement();
-        const datePickerContainer = this.dpContainer.createDatePickerContainerElement(config.themeConfig)
+        const datePickerContainer = this.dpContainer.createDatePickerContainerElement(config.themeConfig, config.theme)
 
         this._datePickerOverlay = datePikerOverlay
         this._datePickerContainer = datePickerContainer
@@ -66,6 +66,7 @@ export class DatePickerHandler {
             this.setDatePickerContainerPositions()
             this._listeners.push(
                 this._renderer.listen("window", "resize", this.setDatePickerContainerPositions.bind(this)),
+                this._renderer.listen("window", "scroll", this.setDatePickerContainerPositions.bind(this)),
                 this._renderer.listen("document", "mousedown", this.onDocumentClick.bind(this)),
             )
         }, 1)
@@ -88,6 +89,8 @@ export class DatePickerHandler {
         const { width: dpWidth, height: dpHeight } = datepicker.getBoundingClientRect()
         const { width: windowWidth, height: windowHeight } = this.getWidnowSizes()
 
+        console.log(top, windowHeight);
+        
         let leftStart: number = left
         let topStart: number = top + height
         let padding: number = 5
