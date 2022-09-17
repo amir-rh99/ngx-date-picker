@@ -1,4 +1,17 @@
-input {
+@import "../../styles/variables";
+
+.form_group{
+    .input_group{
+        margin-bottom: 1rem;
+        .input_label{
+            padding-bottom: 0.25rem;
+            color: #696969;
+            display: inline-block;
+        }
+    }
+}
+
+input[type="text"] {
     outline: none;
     border: 1px solid #ddd;
     color: #666666;
@@ -6,8 +19,116 @@ input {
     height: 2rem;
     padding: 0.5rem 1rem;
     transition: .1s;
-    
+    width: 10rem;
+
     &:focus{
         border-color: #5a5a5a;
+    }
+}
+
+input[type="color"] {
+    outline: none;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+
+    &:focus{
+        border: 1px solid #5a5a5a;
+    }
+}
+
+// switcher styles
+
+.my_switch {
+    position: absolute;
+    display: none;
+
+    input {
+        display: none;
+    }
+    +label {
+        position: relative;
+        padding: 5px 0 0 50px;
+        cursor: pointer;
+
+        &::before{
+            content: "";
+            position: absolute;
+            display: block;
+            left: 0;
+            top: 0;
+            width: 40px; /* x*5 */
+            height: 24px; /* x*3 */
+            border-radius: 16px; /* x*2 */
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        &::after{
+            content: "";
+            position: absolute;
+            display: block;
+            left: 0px;
+            top: 0px;
+            width: 24px; /* x*3 */
+            height: 24px; /* x*3 */
+            border-radius: 16px; /* x*2 */
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        &:hover:after{
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+    }
+
+    &:checked{
+        +label:after{
+            margin-left: 16px;
+        }
+
+        +label:before {
+            background: $primary_color;
+        }
+    }
+}
+
+// select styles
+
+.radio-container{
+    background-color: #f0f0f0;
+    box-shadow: 0 1px 2px 0 rgb(160, 160, 160);
+    border-radius: 5px;
+    overflow: hidden;
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    label {
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        display: inline-block;
+        height: 26px;
+        line-height: 26px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        transition: .2s all ease-in-out;
+        padding: 0 1rem;
+        cursor: pointer;
+    }
+
+    input[type="radio"] {
+        display: none;
+
+        &:checked + label {
+            background: #5a5a5a;
+            background: $primary_color;
+            color: #fff;
+        }
     }
 }

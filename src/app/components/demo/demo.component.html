@@ -1,41 +1,203 @@
-<div>
-  <h4>
-    This is an input element with default ngx-date-picker config:
+<div cl>
+  <h4 class="text_title">
+    This is an input element with 
+    <span class="text_primary">
+      {{isDefaultConfig ? "default" : "your custom"}}
+    </span>
+    ngx-date-picker configs:
   </h4>
-  
-  <div class="my2">
-    <input ngx-date-picker [formControl]="dateControl">
+
+  <div class="mt2">
+    <input type="text" readonly ngx-date-picker [formControl]="dateControl"
+    [datePickerConfig]="customConfig">
   </div>
 
-  <p class="mt3">
-    You can easily replace the default configs with your custom configs.
+  <button *ngIf="!isDefaultConfig" class="my_btn btn_primary mt"
+  (click)="resetToDefault()">reset configs to default</button>
+
+  <p class="mt3 text_body">
+    You can easily replace the default configs with your custom configs:
   </p>
 
-  <form [formGroup]="configForm" class="mt2">
-    <select formControlName="calendar">
-      <option value="gregorian">gregorian</option>
-      <option value="jalali">jalali</option>
-    </select>
+  <div class="my3">
+    <ng-container [ngTemplateOutlet]="form"></ng-container>
+  </div>
+</div>
 
-    <input type="text" formControlName="doneText">
-    <input type="text" formControlName="cancelText">
+<ng-template #form>
+  <form [formGroup]="configForm" class="form_group">
+    <div class="input_group">
+      <label class="input_label">
+        Calendar Type:
+      </label>
+      <div class="input_item">
+        <ng-container [ngTemplateOutlet]="select"
+        [ngTemplateOutletContext]="{selectName: 'calendar', options: selects.calendar}"></ng-container>
+      </div>
+    </div>
 
-    <div>
-      <label for="displayfooter">display footer</label>
-      <input id="displayfooter" formControlName="displayFooter" type="checkbox">
+    <div class="input_group">
+      <label class="input_label">
+        Theme:
+      </label>
+      <div class="input_item">
+        <ng-container [ngTemplateOutlet]="select"
+        [ngTemplateOutletContext]="{selectName: 'theme', options: selects.theme}"></ng-container>
+      </div>
+    </div>
+
+    <div class="input_group">
+      <label class="input_label">
+        Format Type:
+      </label>
+      <div class="input_item">
+        <ng-container [ngTemplateOutlet]="select"
+        [ngTemplateOutletContext]="{selectName: 'format', options: selects.format}"></ng-container>
+      </div>
+    </div>
+
+    <div class="input_group flex items_center">
+      <label class="input_label">
+        Display Actions Footer: 
+      </label>
+      <div class="input_item mx2">
+        <input type="checkbox" class="my_switch" formControlName="displayFooter" id="displayFooter">
+        <label for="displayFooter"></label>
+      </div>
+    </div>
+
+    <div class="input_group flex items_center">
+      <label class="input_label" for="doneText">
+        Done Action Text: 
+      </label>
+      <div class="input_item mx2">
+        <input type="text" formControlName="doneText" id="doneText">
+      </div>
+    </div>
+
+    <div class="input_group flex items_center">
+      <label class="input_label" for="cancelText">
+        Cancel Action Text: 
+      </label>
+      <div class="input_item mx2">
+        <input type="text" formControlName="cancelText" id="cancelText">
+      </div>
     </div>
 
     <div formGroupName="themeConfig">
+
+      <h4 class="text_title mb2">Theme Configs:</h4>
+
+      <div class="input_group">
+        <label class="input_label">
+          Rounded:
+        </label>
+        <div class="input_item">
+          <div class="selects">
+            <div class="radio-container">
+              <ng-container *ngFor="let opt of selects.rounded">
+                <input type="radio" [id]="opt" [value]="opt" formControlName="rounded">
+                <label [for]="opt">{{opt}}</label>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div formGroupName="light">
-        <input type="color" formControlName="primaryColor">
+        <h4 class="text_body">( Light Theme )</h4>
+
+        <div class="flex mt">
+          <div class="input_group flex items_center mr2">
+            <label class="input_label mr">
+              Primary Color:
+            </label>
+            <div class="input_item">
+              <input type="color" formControlName="primaryColor">
+            </div>
+          </div>
+  
+          <div class="input_group flex items_center mr2">
+            <label class="input_label mr">
+              Secondary Color:
+            </label>
+            <div class="input_item">
+              <input type="color" formControlName="secondaryColor">
+            </div>
+          </div>
+  
+          <div class="input_group flex items_center">
+            <label class="input_label mr">
+              Background Color:
+            </label>
+            <div class="input_item">
+              <input type="color" formControlName="backgroudColor">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div formGroupName="dark">
+        <h4 class="text_body">( Dark Theme )</h4>
+
+        <div class="flex mt">
+          <div class="input_group flex items_center mr2">
+            <label class="input_label mr">
+              Primary Color:
+            </label>
+            <div class="input_item">
+              <input type="color" formControlName="primaryColor">
+            </div>
+          </div>
+  
+          <div class="input_group flex items_center mr2">
+            <label class="input_label mr">
+              Secondary Color:
+            </label>
+            <div class="input_item">
+              <input type="color" formControlName="secondaryColor">
+            </div>
+          </div>
+  
+          <div class="input_group flex items_center">
+            <label class="input_label mr">
+              Background Color:
+            </label>
+            <div class="input_item">
+              <input type="color" formControlName="backgroudColor">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </form>
+</ng-template>
 
-  <h4 class="my2">
-    Your input element with your custom configs:
-  </h4>
-  <div class="my2">
-    <input ngx-date-picker [formControl]="customDateControl" [datePickerConfig]="customConfig">
+<ng-template #select let-selectName="selectName" let-options="options">
+  <div class="selects" [formGroup]="configForm">
+    <div class="radio-container">
+      <ng-container *ngFor="let opt of options">
+        <input type="radio" [id]="opt" [value]="opt" [formControlName]="selectName">
+        <label [for]="opt">{{opt}}</label>
+      </ng-container>
+    </div>
   </div>
-</div>
+</ng-template>
+
+<!-- <div>
+  <label for="checkbox-1">Display Footer</label>
+  <input type="checkbox" class="my_switch" formControlName="displayFooter" id="checkbox-1">
+  <label for="checkbox-1"></label>
+</div> -->
+
+<!-- <ng-container [ngTemplateOutlet]="select" 
+[ngTemplateOutletContext]="{selectName: 'format', options: selects.format }"></ng-container> -->
+
+<!-- <div class="selects">
+  <div class="radio-container">
+    <ng-container *ngFor="let opt of selects.rounded">
+      <input type="radio" [id]="opt" [value]="opt" formControlName="rounded">
+      <label [for]="opt">{{opt}}</label>
+    </ng-container>
+  </div>
+</div> -->

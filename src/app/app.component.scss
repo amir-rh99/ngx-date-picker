@@ -1,71 +1,47 @@
 .container{
     max-width: 978px;
-    margin: 1rem auto;
+    margin: 3.5rem auto;
     font-size: 16px;
 
     @media screen and (max-width: 1024px) {
-        max-width: 768px;
+        max-width: 750px;
     }
 
     @media screen and (max-width: 768px) {
-        max-width: 640px;
+        max-width: 600px;
         font-size: 14px;
+    }
+
+    @media screen and (max-width: 675px) {
+        max-width: 540px;
+        font-size: 14px;
+    }
+
+    @media screen and (max-width: 580px) {
+        margin: 3.5rem 1.5rem;
     }
 }
 
-.primary_color {
-    color: #363636;
+.github_link{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 99;
+    height: 2.5rem;
+    text-align: center;
+    background-color: #24292F;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img{
+        width: 1.5rem;
+        margin: 0 0.5rem;
+    }
 }
 
 section{
     margin-bottom: 2rem;
-}
-
-// p {
-//     margin: 0;
-// }
-
-.important {
-    background-color: #fcde8d;
-    display: inline-block;
-    margin: 0.5rem 0;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 0.85rem;
-}
-
-hr {
-    border-color: #e0e0e033;
-    margin: 1.5rem 0;
-}
-
-.footer{
-    height: 50px;
-}
-
-.inline_block {
-    display: inline-block;
-}
-.mt, .my {
-    margin-top: 0.5rem;
-}
-
-.mb, .my {
-    margin-bottom: 0.5rem;
-}
-
-.mt2, .my2 {
-    margin-top: 1rem;
-}
-
-.mb2, .my2 {
-    margin-bottom: 1rem;
-}
-
-.mt3, .my3 {
-    margin-top: 1.5rem;
-}
-
-.mb3, .my3 {
-    margin-bottom: 1.5rem;
 }

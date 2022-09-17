@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "lib:build": "ng build @ah99/ngx-date-picker --configuration production",
-    "lib:build:dev": "ng build @ah99/ngx-date-picker --configuration development --watch",
+    "lib:build:watch": "ng build @ah99/ngx-date-picker --configuration development --watch",
     "test": "ng test"
   },
   "private": true,

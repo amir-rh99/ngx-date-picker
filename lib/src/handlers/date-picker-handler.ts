@@ -88,8 +88,6 @@ export class DatePickerHandler {
 
         const { width: dpWidth, height: dpHeight } = datepicker.getBoundingClientRect()
         const { width: windowWidth, height: windowHeight } = this.getWidnowSizes()
-
-        console.log(top, windowHeight);
         
         let leftStart: number = left
         let topStart: number = top + height
