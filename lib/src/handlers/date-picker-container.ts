@@ -12,10 +12,10 @@ export class DatePickerContainer {
         @Inject(DOCUMENT) protected _document: any    
     ){}
 
-    createDatePickerContainerElement(themeConfig: Partial<ThemeConfig>): HTMLElement {
+    createDatePickerContainerElement(themeConfig: Partial<ThemeConfig>, theme: "dark" | "light"): HTMLElement {
         const container: HTMLElement = this._document.createElement("div")
 
-        this.setThemeVariables(container, themeConfig)
+        this.setThemeVariables(container, themeConfig, theme)
         container.classList.add("datepicker_container")
         container.style.width = "19rem"
         container.style.minHeight = "19rem"
@@ -23,12 +23,14 @@ export class DatePickerContainer {
         return container
     }
 
-    private setThemeVariables(element: HTMLElement, config: Partial<ThemeConfig>){
+    private setThemeVariables(element: HTMLElement, config: Partial<ThemeConfig>, theme: "dark" | "light"){
+
+        const selectedTheme = config[theme]
 
         let [p, s, b] = [
-            this.hexToRgb(config.light!.primaryColor || ""),
-            this.hexToRgb(config.light!.secondaryColor || ""),
-            this.hexToRgb(config.light!.backgroudColor || ""),
+            this.hexToRgb(selectedTheme!.primaryColor || ""),
+            this.hexToRgb(selectedTheme!.secondaryColor || ""),
+            this.hexToRgb(selectedTheme!.backgroudColor || ""),
         ]
                 
         element.style.setProperty("--primaryColor", [p?.r, p?.g, p?.b].join(","))

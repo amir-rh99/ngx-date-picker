@@ -87,7 +87,8 @@ export interface GlobalConfig {
     displayFooter: boolean,
     doneText: string,
     cancelText: string,
-    themeConfig: ThemeConfig
+    themeConfig: ThemeConfig,
+    theme: "dark" | "light"
 }
 
 export type CustomConfig = DeepPartial<GlobalConfig>
@@ -104,20 +105,21 @@ export const DefaultGlobalConfig: GlobalConfig = {
     },
     themeConfig: {
         light: {
-            primaryColor: "#777",
-            secondaryColor: "#444",
-            backgroudColor: "#fff"
+            primaryColor: "#777777",
+            secondaryColor: "#444444",
+            backgroudColor: "#ffffff"
         },
         dark: {
-            primaryColor: "#c5a907",
-            secondaryColor: "#fff",
-            backgroudColor: "#444"
+            primaryColor: "#ffffff",
+            secondaryColor: "#eeeeee",
+            backgroudColor: "#444444"
         },
         rounded: "medium"
     },
     displayFooter: true,
     doneText: "Done",
-    cancelText: "Cancel"
+    cancelText: "Cancel",
+    theme: "light"
 }
 
 export const DATEPICKER_CONFIG = new InjectionToken<GlobalConfig>("DatePickerToken")
