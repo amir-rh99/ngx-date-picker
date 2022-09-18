@@ -1,5 +1,5 @@
 # Angular Date Picker
-![Angular Date Picker](src/assets/ngx-date-picker.png)
+![Angular Date Picker](../src/assets/AngularDatePicker.png)
 
 ngx-date-picker is a customizable jalali ( persian ) and gregorian date picker for Angular +12
 ## Demo: [ngx-date-picker](https://google.com)
