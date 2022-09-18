@@ -1,6 +1,6 @@
 {
   "name": "@ah99/ngx-date-picker",
-  "version": "0.3.0",
+  "version": "1.0.0-beta",
   "peerDependencies": {
     "@angular/common": ">=12.2.0",
     "@angular/core": ">=12.2.0",
