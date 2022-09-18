@@ -51,25 +51,27 @@ export class DatePickerHandler {
         this.datepickerService.datePickerComponent = this._componentInstance
 
         this._componentInstance.instance.config = config
+        
         const datePikerOverlay = this.dpOverlay.getOverlayElement();
         const datePickerContainer = this.dpContainer.createDatePickerContainerElement(config.themeConfig, config.theme)
-
+        
         this._datePickerOverlay = datePikerOverlay
         this._datePickerContainer = datePickerContainer
         
         datePickerContainer.appendChild(this._componentInstance.location.nativeElement)
         datePikerOverlay.appendChild(datePickerContainer)
         
-        setTimeout(()=>{
-            datePikerOverlay.classList.add("opened")
-            this.datePickerIsOpened = true
-            this.setDatePickerContainerPositions()
-            this._listeners.push(
-                this._renderer.listen("window", "resize", this.setDatePickerContainerPositions.bind(this)),
-                this._renderer.listen("window", "scroll", this.setDatePickerContainerPositions.bind(this)),
-                this._renderer.listen("document", "mousedown", this.onDocumentClick.bind(this)),
-            )
-        }, 1)
+        datePikerOverlay.classList.add("opened")
+        this.datePickerIsOpened = true
+
+        this._componentInstance.changeDetectorRef.detectChanges()
+        this.setDatePickerContainerPositions()
+
+        this._listeners.push(
+            this._renderer.listen("window", "resize", this.setDatePickerContainerPositions.bind(this)),
+            this._renderer.listen("window", "scroll", this.setDatePickerContainerPositions.bind(this)),
+            this._renderer.listen("document", "mousedown", this.onDocumentClick.bind(this)),
+        )
 
         return this._componentInstance
     }
@@ -85,7 +87,7 @@ export class DatePickerHandler {
         
         const datepicker = this._componentInstance.location.nativeElement        
         const { height, left, top } = this.inputElement.getBoundingClientRect()
-
+        
         const { width: dpWidth, height: dpHeight } = datepicker.getBoundingClientRect()
         const { width: windowWidth, height: windowHeight } = this.getWidnowSizes()
         
