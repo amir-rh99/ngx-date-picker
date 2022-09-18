@@ -3,7 +3,7 @@
 
 ngx-date-picker is a customizable jalali ( persian ) and gregorian date picker for Angular +12
 
-[Check online demo](https://google.com)
+[Check online demo](https://amir-rh99.github.io/ngx-date-picker/)
 
 ## Install and Setup
 ### step 1: install @ah99/ngx-date-picker
