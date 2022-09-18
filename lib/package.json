@@ -1,6 +1,12 @@
 {
   "name": "@ah99/ngx-date-picker",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
+  "author": {
+    "name": "AmirRezaHammamian",
+    "email": "amirreza.hammamian@gmail.com"
+  },
+  "license": "MIT",
+  "repository": "amir-rh99/ngx-date-picker",
   "peerDependencies": {
     "@angular/common": ">=12.2.0",
     "@angular/core": ">=12.2.0",
@@ -22,5 +28,13 @@
       "esm2015": "./esm2015/ah99-ngx-date-picker.js",
       "default": "./fesm2015/ah99-ngx-date-picker.js"
     }
-  }
+  },
+  "keywords": [
+    "ngx",
+    "ngx-date-picker",
+    "angular",
+    "date picker",
+    "jalali datepicker",
+    "persian datepicker"
+  ]
 }
