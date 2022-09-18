@@ -1,27 +1,34 @@
-# NgxDatePicker
+# Angular Date Picker
+![Angular Date Picker](src/assets/ngx-date-picker.png)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.18.
+ngx-date-picker is a customizable jalali ( persian ) and gregorian date picker for Angular +12
+## Demo: [ngx-date-picker](https://google.com)
 
-## Development server
+***
+## Install and Setup
+### step 1: install @ah99/ngx-date-picker
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+npm i @ah99/ngx-date-picker
+```
+### step 2: Import NgxDatePickerModule to your module
 
-## Code scaffolding
+```typescript
+import { NgxDatePickerModule } from '@ah99/ngx-date-picker'
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+@NgModule({
+    imports: [
+        NgxDatePickerModule.forRoot() // dont forget forRoot()
+    ]
+})
+```
+### step 3: Import css styles to your global styles ( usually styles/.css/.scss/.less/ )
+```css
+  @import "@ah99/ngx-date-picker/styles"
+```
+## Use
+use `ngx-date-picker` directive on any `html input element` you need
+```html
+  <input ngx-date-picker [(ngModel)]="dateControl">
+```
+**important**: you need to setup one form model in your input element with formControl or ngModel So you must have already imported **FormsModule** or **ReactiveFormsModule** in your module.

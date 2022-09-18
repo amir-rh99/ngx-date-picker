@@ -26,8 +26,8 @@
 
 <ng-template #form>
   <form [formGroup]="configForm" class="form_group">
-    <div class="input_group">
-      <label class="input_label">
+    <div class="input_group flex items_center">
+      <label class="input_label mr2">
         Calendar Type:
       </label>
       <div class="input_item">
@@ -36,8 +36,8 @@
       </div>
     </div>
 
-    <div class="input_group">
-      <label class="input_label">
+    <div class="input_group flex items_center">
+      <label class="input_label mr2">
         Theme:
       </label>
       <div class="input_item">
@@ -46,8 +46,8 @@
       </div>
     </div>
 
-    <div class="input_group">
-      <label class="input_label">
+    <div class="input_group flex items_center">
+      <label class="input_label mr2">
         Format Type:
       </label>
       <div class="input_item">
@@ -57,29 +57,29 @@
     </div>
 
     <div class="input_group flex items_center">
-      <label class="input_label">
+      <label class="input_label mr2">
         Display Actions Footer: 
       </label>
-      <div class="input_item mx2">
+      <div class="input_item">
         <input type="checkbox" class="my_switch" formControlName="displayFooter" id="displayFooter">
         <label for="displayFooter"></label>
       </div>
     </div>
 
     <div class="input_group flex items_center">
-      <label class="input_label" for="doneText">
+      <label class="input_label mr2" for="doneText">
         Done Action Text: 
       </label>
-      <div class="input_item mx2">
+      <div class="input_item">
         <input type="text" formControlName="doneText" id="doneText">
       </div>
     </div>
 
     <div class="input_group flex items_center">
-      <label class="input_label" for="cancelText">
+      <label class="input_label mr2" for="cancelText">
         Cancel Action Text: 
       </label>
-      <div class="input_item mx2">
+      <div class="input_item">
         <input type="text" formControlName="cancelText" id="cancelText">
       </div>
     </div>
@@ -88,8 +88,8 @@
 
       <h4 class="text_title mb2">Theme Configs:</h4>
 
-      <div class="input_group">
-        <label class="input_label">
+      <div class="input_group flex items_center">
+        <label class="input_label mr2">
           Rounded:
         </label>
         <div class="input_item">
@@ -183,21 +183,3 @@
     </div>
   </div>
 </ng-template>
-
-<!-- <div>
-  <label for="checkbox-1">Display Footer</label>
-  <input type="checkbox" class="my_switch" formControlName="displayFooter" id="checkbox-1">
-  <label for="checkbox-1"></label>
-</div> -->
-
-<!-- <ng-container [ngTemplateOutlet]="select" 
-[ngTemplateOutletContext]="{selectName: 'format', options: selects.format }"></ng-container> -->
-
-<!-- <div class="selects">
-  <div class="radio-container">
-    <ng-container *ngFor="let opt of selects.rounded">
-      <input type="radio" [id]="opt" [value]="opt" formControlName="rounded">
-      <label [for]="opt">{{opt}}</label>
-    </ng-container>
-  </div>
-</div> -->
